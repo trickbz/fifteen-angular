@@ -5,29 +5,28 @@
     <title>Fifteenth</title>
     <link rel="stylesheet" href="assets/css/configuration.css" media="screen" charset="utf-8">
     <script src="bower_components/angular/angular.js" charset="utf-8"></script>
+    <script src="bower_components/underscore/underscore.js" charset="utf-8"></script>
     <script src="app/app.module.js" charset="utf-8"></script>
     <script src="app/components/configuration/controllers/configurationController.js" charset="utf-8"></script>
   </head>
   <body ng-app="appModule">
     <div class="container" ng-controller="ConfigurationController">
       <div id="controlPanel">
-        <h2>Generate board:</h2>
+        <h2>Fifteenth</h2>
         <div>
           <label for="boardWidthInput"></label>
           <input id="boardWidthInput" type="number" value="4" ng-model="boardWidth" />
           <label for="boardHeightInput"></label>
           <input id="boardHeightInput" type="number" value="4" ng-model="boardHeight" />
-          <button id="generateBoardButton">Generate</button>
+          <button id="resetBoardSizeButton" ng-click="resetBoardSizeToDefault()" ng-disabled="isDefaultBoardSize()">Reset to {{defaultBoardWidth}}x{{defaultBoardHeight}}</button>
+          <button id="randomizeBoard" ng-click="randomizeBoard()">Randomize</button>
         </div>
       </div>
       <h3>Total cells: {{ boardWidth }} &times; {{ boardHeight }} = {{ boardWidth * boardHeight }}</h3>
 
       <div id="board">
-        <div ng-repeat="h in arrayFromNumber(boardHeight) track by $index" ng-init="parentIndex = $index">
-          <span ng-repeat="w in arrayFromNumber(boardWidth) track by $index" class="board-cell">{{ parentIndex * $index }}</span>
-        </div>
+        <div ng-repeat="num in board" class="board-cell-full" ng-class="[{clearfix: $index % (boardWidth + 0) == 0}, num == 0 ? 'board-cell-empty' : 'board-cell-full']">{{num == 0 ? '' : num}}</div>
       </div>
-
     </div>
   </body>
 </html>
